@@ -1,0 +1,33 @@
+[
+  {
+    "step": "Fix Jest ESM import issues and ambiguous selector errors in TransactionHistory test",
+    "sub_steps": [
+      "Inspect all Jest test files using axios for API calls (e.g., AccountDashboard.test.js, AccountDetails.test.js, DepositForm.test.js, WithdrawForm.test.js, TransferForm.test.js, TransactionHistory.test.js) and add `jest.mock('axios');` at the top to prevent ESM/CJS import token errors.",
+      "In TransactionHistory.test.js, find the ambiguous usage of getByText (e.g., getByText(/A/)) and replace with a more specific selector (such as getAllByText(/^A$/, { exact: false })[0] or a test ID selector to avoid selector ambiguity).",
+      "Review any other test files that may have similar ambiguous selector issues and apply a more specific query (using data-testid where necessary)."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/AccountDashboard.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/AccountDetails.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/DepositForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/WithdrawForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/TransferForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/TransactionHistory.test.js"
+    ],
+    "description": "This step solves the test ESM import errors by mocking axios everywhere it is used in test files, and corrects the ambiguous selector error in TransactionHistory by making text selection more specific or using test IDs."
+  },
+  {
+    "step": "Build, lint, and test the React frontend solution",
+    "sub_steps": [
+      "Run npm install in the reactapp directory to resolve all dependencies.",
+      "Run npm run build to compile and check for build errors.",
+      "Run npx eslint src/ --fix to lint and auto-fix code issues.",
+      "Run npm run test:ci to execute all Jest tests, ensuring non-blocking test execution and full pass.",
+      "Fix any errors identified in compilation or testing until clean result."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Confirms the React frontend is complete, syntactically correct, lints successfully, and meets all test case and integration requirements."
+  }
+]

@@ -1,0 +1,239 @@
+[
+  {
+    "step": "Read and analyze backend dependencies and project structure",
+    "sub_steps": [
+      "Open and read /home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/pom.xml to inspect dependencies (Spring Web, JPA, Validation, MySQL Driver).",
+      "Confirm the existence of database configuration in application.properties for MySQL.",
+      "Understand base package: com.examly.springapp.",
+      "Identify initial files: BankingTransactionManagementSystemApplication.java (entry point), and plan locations for new files."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/pom.xml",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/resources/application.properties"
+    ],
+    "description": "Establishes knowledge of current backend setup, confirms all needed dependencies are available, and prepares for entity/repository/service/controller creation."
+  },
+  {
+    "step": "Implement JPA entities for Account and Transaction",
+    "sub_steps": [
+      "Create Account entity class with fields: accountId (PK), accountNumber (unique), accountHolderName, balance, accountType, createdDate.",
+      "Create Transaction entity class with fields: transactionId (PK), accountId (FK), amount, transactionType, description, transactionDate, recipientAccountId (nullable).",
+      "Set up appropriate JPA annotations, table/column mappings, relationships (one-to-many, many-to-one if applicable).",
+      "Add validation annotations on entity fields as per requirements."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/model/Account.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/model/Transaction.java"
+    ],
+    "files_to_edit": [],
+    "description": "Defines data structure and schema for accounts and transactions, enabling Spring Data JPA to manage persistence. Fulfills test prerequisites for data model."
+  },
+  {
+    "step": "Implement JPA repositories for Account and Transaction",
+    "sub_steps": [
+      "Create AccountRepository interface extending JpaRepository<Account, Long>.",
+      "Create TransactionRepository interface extending JpaRepository<Transaction, Long>.",
+      "Add necessary custom query methods (eg. for finding by accountNumber, by accountId, etc.)."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/repository/AccountRepository.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/repository/TransactionRepository.java"
+    ],
+    "files_to_edit": [],
+    "description": "Enables resource access to Account and Transaction entities, supporting necessary lookups for validation and history display. Underpins all controller/service operations."
+  },
+  {
+    "step": "Implement Account and Transaction services with business logic",
+    "sub_steps": [
+      "Create AccountService (and implementation), providing account creation, retrieval, and listing with validation as described.",
+      "AccountService: enforce unique 10-digit account number, name not empty, initial balance >= 500.00, type in ['Savings', 'Checking'].",
+      "Create TransactionService (and implementation) for deposit, withdrawal, transfer and transaction history.",
+      "TransactionService: enforce positive amount, sufficient balance (min 500.00), account existence, distinct accounts for transfer, atomic/batch updates, and error handling.",
+      "Structure all service methods to throw custom (or standard) exceptions for error responses."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/service/AccountService.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/service/AccountServiceImpl.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/service/TransactionService.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/service/TransactionServiceImpl.java"
+    ],
+    "files_to_edit": [],
+    "description": "Implements the core business logic for accounts and banking transactions, ensuring data integrity and validation to meet all backend requirements and satisfy test cases."
+  },
+  {
+    "step": "Implement Account and Transaction controllers to expose REST API endpoints",
+    "sub_steps": [
+      "Create AccountController for endpoints: POST /api/accounts, GET /api/accounts/{accountId}, GET /api/accounts.",
+      "Create TransactionController for endpoints: POST /api/transactions/deposit, POST /api/transactions/withdraw, POST /api/transactions/transfer, GET /api/transactions/account/{accountId}.",
+      "Implement request/response DTOs as needed.",
+      "Handle error responses with appropriate HTTP status codes and error messages (400, 404, etc.)."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/controller/AccountController.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/controller/TransactionController.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/dto/CreateAccountRequest.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/dto/DepositWithdrawRequest.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/dto/TransferRequest.java"
+    ],
+    "files_to_edit": [],
+    "description": "Publishes the REST API endpoints required for frontend interaction and validation, with comprehensive input/output models and robust error handling."
+  },
+  {
+    "step": "Implement global error handling and data formatting",
+    "sub_steps": [
+      "Create a global exception handler using @ControllerAdvice for mapping service/validation exceptions to API error responses (JSON with 'error' field and status).",
+      "Ensure currency values are always formatted to 2 decimal places.",
+      "Add utility methods for consistent error message generation and validation."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/exception/GlobalExceptionHandler.java"
+    ],
+    "files_to_edit": [],
+    "description": "Centralizes error handling for all controller endpoints, aligns error message formats with test case expectations, and standardizes currency formatting."
+  },
+  {
+    "step": "Add and configure CORS to support frontend-backend integration",
+    "sub_steps": [
+      "Enable CORS in the backend app using @CrossOrigin or WebMvcConfigurer to allow calls from http://localhost:3000 and other origins as needed.",
+      "Edit main application or config class to support CORS for /api/* endpoints."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/config/WebConfig.java"
+    ],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/main/java/com/examly/springapp/BankingTransactionManagementSystemApplication.java"
+    ],
+    "description": "Ensures frontend React app running on a different port can make API requests to backend endpoints as required by the UI and tests."
+  },
+  {
+    "step": "Implement all JUnit backend test cases for service and controller layers",
+    "sub_steps": [
+      "For testCreateAccount: Test successful account creation.",
+      "For testCreateAccountValidation: Test all validation failures (account number length/uniqueness, empty name, low balance, invalid type).",
+      "For testDepositAndWithdraw: Test deposit, withdraw, transaction records, insufficient funds.",
+      "For testTransferBetweenAccounts: Test inter-account transfer, balances, transaction links, insufficient funds.",
+      "For testGetTransactionHistory: Test transaction ordering, details, errors for missing accounts.",
+      "Mock dependencies (repositories), use @SpringBootTest or @WebMvcTest as needed, isolate tests to service or controller logic.",
+      "NO extra cleanup() or test frameworks beyond JUnit + Spring Test."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/test/java/com/examly/springapp/service/AccountServiceTest.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/test/java/com/examly/springapp/service/TransactionServiceTest.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/test/java/com/examly/springapp/controller/AccountControllerTest.java",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/springapp/src/test/java/com/examly/springapp/controller/TransactionControllerTest.java"
+    ],
+    "files_to_edit": [],
+    "description": "Implements all backend test cases as defined, ensuring 100% required test coverage and validation of business/REST logic with positive and negative scenarios."
+  },
+  {
+    "step": "Compile and test Spring Boot backend solution",
+    "sub_steps": [
+      "Run mvn clean compile -q -Dspring.main.banner-mode=off and resolve any compilation errors.",
+      "Run mvn test -q -Dspring.main.banner-mode=off to execute all JUnit tests and fix any failures until full pass results.",
+      "Optionally run mvn clean install -q -Dspring.main.banner-mode=off for final packing."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Ensures backend code is syntactically correct and all JUnit tests pass, completing the backend phase required for integration with React frontend."
+  },
+  {
+    "step": "Read and analyze frontend (React) dependencies and structure",
+    "sub_steps": [
+      "Open and read /home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/package.json to inspect dependencies (React, React Router, Testing Libraries, etc).",
+      "Review initial structure: App.js, App.css, index.js exist; plan new files in src/components and src/utils directories."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/package.json"
+    ],
+    "description": "Gathers information to appropriately use, extend, and structure the frontend application matching provided design guidance."
+  },
+  {
+    "step": "Implement API utility and helper files",
+    "sub_steps": [
+      "Create src/utils/api.js: functions to call each backend endpoint (fetch accounts, create, deposit, withdraw, transfer, transaction history, etc).",
+      "Create src/utils/constants.js: define account type options, minimum balance, API URL base, error messages.",
+      "Create src/utils/helpers.js: utility for formatting monetary values, date display, etc.",
+      "Ensure all utility files are reusable and well-typed if using propTypes.",
+      "Reference these files in component and test implementations."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/utils/api.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/utils/constants.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/utils/helpers.js"
+    ],
+    "files_to_edit": [],
+    "description": "Provides a central location for reusable logic, consistent API interaction, and formatters essential for frontend components. Eases test mocking."
+  },
+  {
+    "step": "Implement core React components and corresponding test files",
+    "sub_steps": [
+      "AccountDashboard: list all accounts, render as cards, \"View Details\" and \"Create New Account\". Test for data fetching, display, and navigation.",
+      "AccountDetails: show full account info, balance, Deposit/Withdraw/Transfer buttons, and transaction history. Test display, data integration, and navigation.",
+      "CreateAccountForm: render form with validation (account number, name, balance, type), display error messages. Test field presence, validation, API call, nav.",
+      "DepositForm: form for amount, description, validate positive amount. Test errors and correct submission.",
+      "WithdrawForm: similar structure/validation as Deposit, test for errors and submission.",
+      "TransferForm: fields for recipient account, amount, description, dropdown, and validation. Test options, errors, and submission.",
+      "TransactionHistory: table view of transactions, test ordering and formatting (+/- for amounts, date sort).",
+      "Apply routing in App.js based on specification.",
+      "Apply all required UI/UX and design guidance (CSS variables, container centering, error/display states, responsiveness)."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/AccountDashboard.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/AccountDashboard.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/AccountDetails.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/AccountDetails.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/CreateAccountForm.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/CreateAccountForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/DepositForm.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/DepositForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/WithdrawForm.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/WithdrawForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/TransferForm.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/TransferForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/TransactionHistory.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/TransactionHistory.test.js"
+    ],
+    "files_to_edit": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/App.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/App.css"
+    ],
+    "description": "Provides the complete UI and integration coverage, directly supporting test cases relating to account dashboard, forms, details, actions, and history, each with robust Jest/RTL test files."
+  },
+  {
+    "step": "Implement all frontend Jest test cases covering UI and API integration",
+    "sub_steps": [
+      "testAccountDashboard: Mock API fetch, verify all accounts show, details, correct navigation, View Details, Create New Account.",
+      "testCreateAccountForm: Field presence, validation, display/remove errors, mock API submission, success navigation.",
+      "testAccountDetailsAndTransactionHistory: Mock fetch, display details/buttons, transaction table, ordering, +/-, formatting.",
+      "testTransactionForms: Deposit/Withdraw/Transfer, validate fields, dropdown, mock errors, and successful calls.",
+      "NO manual cleanup() calls; use React Testing Library with correct async patterns and test IDs.",
+      "Align ALL validation/error text and UI elements with what test expects."
+    ],
+    "files_to_add": [
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/AccountDashboard.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/CreateAccountForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/AccountDetails.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/DepositForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/WithdrawForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/TransferForm.test.js",
+      "/home/coder/project/workspace/question_generation_service/solutions/cd71fc6c-32c2-4cd7-9179-c2ec3f1ddfbc/reactapp/src/components/TransactionHistory.test.js"
+    ],
+    "files_to_edit": [],
+    "description": "Completes all provided Jest test cases with comprehensive coverage of all functional, error, and integration flows, strictly matching the required scenario expectations."
+  },
+  {
+    "step": "Build, lint, and test the React frontend solution",
+    "sub_steps": [
+      "Run npm install in the reactapp directory to resolve all dependencies.",
+      "Run npm run build to compile and check for build errors.",
+      "Run npx eslint src/ --fix to lint and auto-fix code issues.",
+      "Run npm run test:ci to execute all Jest tests, ensuring non-blocking test execution and full pass.",
+      "Fix any errors identified in compilation or testing until clean result."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Confirms the React frontend is complete, syntactically correct, lints successfully, and meets all test case and integration requirements."
+  }
+]

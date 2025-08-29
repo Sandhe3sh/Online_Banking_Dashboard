@@ -1,0 +1,22 @@
+[
+  {
+    "step": "Break down the frontend build, lint, and test step into smaller, more manageable chunks to isolate failures faster",
+    "sub_steps": [
+      "Run npm install in the reactapp directory to resolve all dependencies.",
+      "Run npm run build to compile and check for build errors. If errors occur, address only build-related issues (e.g., syntax, missing modules) and retry build until it passes."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "This step ensures dependencies are resolved and attempts to build the project, separating compilation from linting/testing to aid faster failure isolation."
+  },
+  {
+    "step": "Run linting and then execute Jest tests in the React frontend solution, isolating lint and test separately for fine-grained troubleshooting",
+    "sub_steps": [
+      "Run npx eslint src/ --fix to lint and auto-fix code issues in reactapp directory. Address only linter errors if present, rerun until successful.",
+      "Run npm run test:ci to execute all Jest tests. If test failures occur, address them incrementally until all tests pass."
+    ],
+    "files_to_add": [],
+    "files_to_edit": [],
+    "description": "Executes linting and all test cases in independent steps for improved error analysis and targeted fixing."
+  }
+]
