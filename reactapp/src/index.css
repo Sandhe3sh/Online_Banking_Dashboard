@@ -1,0 +1,57 @@
+/* index.css */
+
+/* Reset some default browser styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set a comfortable base font and background */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  background-color: #f9fafb;
+  color: #333;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Make links look nice */
+a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Style buttons consistently */
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #155dbb;
+}
+
+/* Add some spacing between paragraphs */
+p {
+  margin-bottom: 1em;
+}
+
+/* Container to center content */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+}
