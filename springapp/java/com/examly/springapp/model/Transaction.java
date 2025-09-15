@@ -48,4 +48,5 @@ public class Transaction {
 
     @Column(name = "transaction_date", nullable = false)
     private LocalDateTime transactionDate;
+    
 }

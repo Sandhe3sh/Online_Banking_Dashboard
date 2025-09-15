@@ -80,6 +80,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { getAccountDetails, getTransactionHistory } from '../utils/api';
+ 
 
 function AccountDetails({ accountId }) {
   const [account, setAccount] = useState(null);

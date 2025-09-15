@@ -30,3 +30,8 @@ export const getAllAccounts = () => {
   return axios.get(`${API_BASE_URL}/accounts`);
 };
  
+// export const registerUser = (userData) =>
+//   axios.post(`${API_BASE_URL}/register`, userData);
+
+// export const loginUser = (userData) =>
+//   axios.post(`${API_BASE_URL}/login`, userData);
